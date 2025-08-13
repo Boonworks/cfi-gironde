@@ -16,7 +16,7 @@ Basé sur un engagement bénévole, le centre mobilise des formateurs passionné
 
 
 <p align="center">
-  <img src="img/web/logo.png" width="100">
+  <img src="img/web/logo_cfi.png" width="100">
 </p>
 
 
@@ -34,5 +34,5 @@ Basé sur un engagement bénévole, le centre mobilise des formateurs passionné
 ---
 
 <p align="center">
-  <img src="img/web/logo_cfi.png" width="100">
+  <img src="img/web/logo.png" width="100">
 </p>
