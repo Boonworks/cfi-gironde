@@ -5,6 +5,7 @@
 
  **Accès au site :** [cfi-gironde.fr](https://cfigironde.fr)
 
+---
 
 ## À propos
 Le Centre de formation et d'intervention (CFI) de Gironde est l’un des 32 CFI existants en France. 
@@ -31,8 +32,10 @@ Basé sur un engagement bénévole, le centre mobilise des formateurs passionné
 * Refaire un calendrier agréable et visuel
 * Refaire la page DPS.
 
----
+
 
 <p align="center">
   <img src="img/web/logo.png" width="100">
 </p>
+
+---
