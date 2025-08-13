@@ -1,3 +1,7 @@
+config/config.mail.php
+
+config/codes_serveur.md
+
 config
 
 test_dps.html
@@ -14,3 +18,8 @@ img/album
 img/galerie
 
 phpmailer
+
+idees.txt
+
+
+todo.md
