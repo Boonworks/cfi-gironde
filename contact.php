@@ -116,7 +116,7 @@ if (is_post()) {
     	if (!$errors) 
 		{
       		$subject = "Contact site – $motif";
-			// ✅ Version HTML
+			// Version HTML
 			$bodyHtml = "
 			    <h2> Nouveau message depuis le merveilleux site web du cfi</h2>
 			    <p><strong>Nom :</strong> " . htmlspecialchars($nom, ENT_QUOTES, 'UTF-8') . "</p>
@@ -132,7 +132,7 @@ if (is_post()) {
 				<p>Mail rédigé automatiquement par Thomas, bisous :)<p>
 			";
 
-			// ✅ Version texte brut (fallback)
+			// Version texte brut (fallback)
 			$bodyText =
 			    "Nouveau message depuis le site\n\n" .
 			    "Nom : $nom\n" .
