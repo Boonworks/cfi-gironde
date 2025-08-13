@@ -1,24 +1,17 @@
-config/config.mail.php
-
-config/codes_serveur.md
-
 config
-
-dps.html
-
-llms.txt
-
-.htaccess
-
-robots.txt
-
-sitemap.xml
+config/config.mail.php
+config/codes_serveur.md
 
 img/album
 img/galerie
 
 phpmailer
 
-idees.txt
+.htaccess
+sitemap.xml
+robots.txt
+llms.txt
 
 todo.md
+
+dps.html
