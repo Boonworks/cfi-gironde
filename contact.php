@@ -119,7 +119,7 @@ if (is_post()) {
 			// Version HTML
 			$bodyHtml = "
 			    <h2> Nouveau message depuis le merveilleux site web du cfi</h2>
-			    <p><strong>Nom :</strong> " . htmlspecialchars($nom, ENT_QUOTES, 'UTF-8') . "</p>
+			    <p><strong>Nom Prénom:</strong> " . htmlspecialchars($nom, ENT_QUOTES, 'UTF-8') . "</p>
 			    <p><strong>Email :</strong> " . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . "</p>
 			    <p><strong>Téléphone :</strong> " . htmlspecialchars($telephone, ENT_QUOTES, 'UTF-8') . "</p>
 			    <p><strong>Motif :</strong> " . htmlspecialchars($motif, ENT_QUOTES, 'UTF-8') . "</p>
@@ -163,7 +163,7 @@ if (is_post()) {
         		$mail->setFrom($SMTP['from'], $SITE_NAME);
         		// Destinataire (ta boîte)
         		$mail->addAddress($MAIL_TO);
-				$mail->addAddress($MAIL_TO2);
+				$mail->addAddress($MAIL_TO2); //cfi-gironde@snsm.org
         		// L’utilisateur en Reply-To
         		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         		  $mail->addReplyTo($email, $nom);
@@ -283,10 +283,10 @@ if (is_post()) {
       		<div class="accueil__text">
         		<div class="accueil__text__top">
         	  		<div class="sep"></div>
-        	  		<p>Bordeaux</p>
+        	  		<p>Centre de formation et d'intervention de Gironde</p>
         		</div>
         		<div class="accueil__text__mid">
-        	  		<h1>Centre de formation et d'intervention de Gironde</h1>
+        	  		<h1>Contact</h1>
         		</div>
       		</div>
     	</div>
@@ -334,7 +334,7 @@ if (is_post()) {
           			<input type="hidden" name="captcha_token" id="captcha_token">
 
           			<div class="form-group">
-            			<label for="nom">Nom</label>
+            			<label for="nom">Nom Prénom</label>
             			<input type="text" id="nom" name="nom" required value="<?php echo e($_POST['nom'] ?? ''); ?>">
           			</div>
 
