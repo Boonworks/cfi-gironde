@@ -26,6 +26,7 @@ use PHPMailer\PHPMailer\Exception;
 /* ================= CONFIG ==================== */
 // Destinataire final
 $MAIL_TO   = 'tbesson50@gmail.com';
+$MAIL_TO2   = 'cfi-gironde@snsm.org';
 $SITE_NAME = 'CFI Gironde';
 
 $secrets = require '/home/config.mail.php';
@@ -101,7 +102,7 @@ if (is_post()) {
   	  	// Validations
   	  	if ($nom === '' || mb_strlen($nom) > 100)                       $errors[] = "Nom requis (max 100).";
   	  	if (!filter_var($email, FILTER_VALIDATE_EMAIL))                 $errors[] = "Adresse e-mail invalide.";
-  	  	if (!preg_match('/^0[1-9](?:[ .-]?\d{2}){4}$/', $telephone))    $errors[]="Téléphone invalide.";
+  	  	if (!preg_match('/^0[1-9](?:[ .-]?\d{2}){4}$/', $telephone))    $errors[] = "Téléphone invalide.";
   	  	if ($motif === '')                                              $errors[] = "Veuillez sélectionner un motif.";
   	  	if ($message === '' || mb_strlen($message) < 10)                $errors[] = "Message trop court (10 caractères min).";
 
@@ -115,13 +116,35 @@ if (is_post()) {
     	if (!$errors) 
 		{
       		$subject = "Contact site – $motif";
-      		$body =   "Nom : $nom\n"
-            		. "Email : $email\n"
-            		. "Téléphone : $telephone\n"
-            		. "Motif : $motif\n"
-            		. "Message :\n$message\n\n"
-            		. "IP : $ip\nDate : " . date('Y-m-d H:i:s');
-      		try
+			// ✅ Version HTML
+			$bodyHtml = "
+			    <h2> Nouveau message depuis le merveilleux site web du cfi</h2>
+			    <p><strong>Nom :</strong> " . htmlspecialchars($nom, ENT_QUOTES, 'UTF-8') . "</p>
+			    <p><strong>Email :</strong> " . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . "</p>
+			    <p><strong>Téléphone :</strong> " . htmlspecialchars($telephone, ENT_QUOTES, 'UTF-8') . "</p>
+			    <p><strong>Motif :</strong> " . htmlspecialchars($motif, ENT_QUOTES, 'UTF-8') . "</p>
+			    <p><strong>Message :</strong><br>" . nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8')) . "</p>
+			    <hr>
+			    <p><strong>IP :</strong> " . htmlspecialchars($ip, ENT_QUOTES, 'UTF-8') . "<br>
+			    <strong>Date :</strong> " . date('Y-m-d H:i:s') . "</p>+
+
+
+				<p>Mail rédigé automatiquement par Thomas, bisous :)<p>
+			";
+
+			// ✅ Version texte brut (fallback)
+			$bodyText =
+			    "Nouveau message depuis le site\n\n" .
+			    "Nom : $nom\n" .
+			    "Email : $email\n" .
+			    "Téléphone : $telephone\n" .
+			    "Motif : $motif\n" .
+			    "Message :\n$message\n\n" .
+			    "IP : $ip\n" .
+			    "Date : " . date('Y-m-d H:i:s');
+
+			
+			try
 			{
         		$mail = new PHPMailer(true);
         		$mail->CharSet   = 'UTF-8';
@@ -140,14 +163,15 @@ if (is_post()) {
         		$mail->setFrom($SMTP['from'], $SITE_NAME);
         		// Destinataire (ta boîte)
         		$mail->addAddress($MAIL_TO);
+				$mail->addAddress($MAIL_TO2);
         		// L’utilisateur en Reply-To
         		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         		  $mail->addReplyTo($email, $nom);
         		}
 
         		$mail->Subject = $subject;
-        		$mail->Body    = $body;
-        		$mail->AltBody = $body;
+        		$mail->Body    = $bodyHtml;
+        		$mail->AltBody = $bodyText;
         		$mail->send();
 					
         		try 
@@ -156,8 +180,36 @@ if (is_post()) {
         		    $ack->clearAddresses();
         		    $ack->clearReplyTos();
         		    $ack->addAddress($email, $nom);
-        		    $ack->Subject = "CFI Gironde — Accusé de réception — Demande de $motif";
-        		    $ack->Body = "Bonjour $nom,\n\nNous avons bien reçu votre message .\nUn membre de l'équipe vous répondra prochainement.\n\n— CFI Gironde";
+        		    $ack->Subject = "CFI Gironde — Accusé de réception";
+					$ack->isHTML(true); // On envoie en HTML pour gérer les sauts de ligne
+					$ack->addEmbeddedImage('img/web/logo_cfi.png', 'logo_cfi');
+
+    				//  Version HTML
+    				$ack->isHTML(true);
+    				$ack->Body = "
+				        Bonjour $nom,<br><br>
+				        Nous avons bien reçu votre message.<br>
+				        Un membre de l'équipe vous répondra prochainement.<br><br>
+				        — CFI Gironde <br>
+						cfi-gironde@snsm.org<br>
+						500 Boulevard Alfred Daney <br>
+						33300 Bordeaux <br><br>
+
+						<img src='cid:logo_cfi' style='max-width:100px;'>
+
+				    ";
+
+				    //  Version texte brut
+				    $ack->AltBody = "Bonjour $nom,\n\n"
+				        . "Nous avons bien reçu votre message.\n"
+				        . "Un membre de l'équipe vous répondra prochainement.\n\n"
+				        . "— CFI Gironde\n\n"
+						. "cfi-gironde@snsm.org\n\n"
+						. "500 Boulevard Alfred Daney\n\n"
+						. "33300 Bordeaux\n\n"
+						
+					;
+
         		    $ack->send();
         		} catch (\Throwable $e) { /* on ignore si l’AR échoue */ }
 			
@@ -300,10 +352,10 @@ if (is_post()) {
             			<label for="motif">Motif du message</label>
             			<select id="motif" name="motif" required>
               				<option value="" disabled <?php echo empty($_POST['motif']) ? 'selected' : ''; ?>>-- Sélectionner un motif --</option>
-              				<option value="formation_nageur" <?php echo (($_POST['motif'] ?? '')==='formation_nageur')?'selected':''; ?>>Formation de nageur sauveteur</option>
-              				<option value="pse" <?php echo (($_POST['motif'] ?? '')==='pse')?'selected':''; ?>>Formation PSE1&2</option>
-              				<option value="psc" <?php echo (($_POST['motif'] ?? '')==='psc')?'selected':''; ?>>Formation PSC</option>
-              				<option value="autre" <?php echo (($_POST['motif'] ?? '')==='autre')?'selected':''; ?>>Autre</option>
+              				<option value="Formation de Nageur Sauveteur" <?php echo (($_POST['motif'] ?? '')==='Formation de Nageur Sauveteur')?'selected':''; ?>>Formation de nageur sauveteur</option>
+              				<option value="Formation PSE" <?php echo (($_POST['motif'] ?? '')==='Formation PSE')?'selected':''; ?>>Formation PSE1&2</option>
+              				<option value="Formation PSC" <?php echo (($_POST['motif'] ?? '')==='Formation PSC')?'selected':''; ?>>Formation PSC</option>
+              				<option value="Autre" <?php echo (($_POST['motif'] ?? '')==='Autre')?'selected':''; ?>>Autre</option>
             			</select>
           			</div>
 
