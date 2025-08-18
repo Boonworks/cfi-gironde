@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function(){
   async function loadEvents(){
     alertN.classList.remove('show');
     try{
-      const res=await fetch('calendar.ics',{cache:'no-store'});
+      const res=await fetch('/home/calendar.ics',{cache:'no-store'});
       if(!res.ok) throw new Error('HTTP '+res.status);
       const text=await res.text();
 
