@@ -64,50 +64,43 @@
                 <div class="accueil__text__mid">
                     <h1>Calendrier promotion 2025-2026</h1>
                 </div>
-                <!-- <div class="accueil__text__bot">
-                    <p>scroll down <i class="fas fa-long-arrow-alt-down"></i></p>
-                </div> -->
             </div>
         </div>
     </section>
 
-<!----------------------------- SECTION PRINCIPALE----------------------  -->
-<!-- === Calendrier === -->
-<section id="calendrier" class="cal">
-  <main class="cal__root" aria-label="Calendrier mensuel">
-    <header class="cal__header">
-      <div class="cal__nav">
-        <button id="calPrev" aria-label="Mois précédent">◀</button>
-        <button id="calNext" aria-label="Mois suivant">▶</button>
-      </div>
-      <div class="cal__title" id="calTitle">Mois ANNÉE</div>
-      <span></span>
-    </header>
+    <!----------------------------- SECTION PRINCIPALE----------------------  -->
 
-    <div class="cal__weekdays" aria-hidden="true">
-      <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
-    </div>
+    <section id="calendrier" class="cal">
+        <main class="cal__root" aria-label="Calendrier mensuel">
+            <header class="cal__header">
+                <div class="cal__nav">
+                    <button id="calPrev" aria-label="Mois précédent">◀</button>
+                    <button id="calNext" aria-label="Mois suivant">▶</button>
+                </div>
+            <div class="cal__title" id="calTitle">Mois ANNÉE</div>
+            <span></span>
+            </header>
 
-    <section class="cal__grid" id="calGrid"></section>
-    <div id="calAlert" class="cal__alert" role="alert" aria-live="polite"></div>
-  </main>
+            <div class="cal__weekdays" aria-hidden="true">
+                <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
+            </div>
 
-  <!-- Modal (overlay page) -->
-  <div id="eventModal" class="cal__modal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="cal__modal-card">
-      <div class="cal__modal-head">
-        <div class="cal__modal-title" id="modalTitle">Évènements</div>
-        <!-- Croix masquée visuellement -->
-        <button id="modalClose" aria-label="Fermer" class="cal__modal-close" hidden>✕</button>
-      </div>
-      <div class="cal__modal-body" id="modalBody"></div>
-    </div>
-  </div>
-</section>
-<!-- === /Calendrier === -->
+            <section class="cal__grid" id="calGrid"></section>
+            <div id="calAlert" class="cal__alert" role="alert" aria-live="polite"></div>
+        </main>
 
+        <div id="eventModal" class="cal__modal" aria-hidden="true" role="dialog" aria-modal="true">
+            <div class="cal__modal-card">
+                <div class="cal__modal-head">
+                    <div class="cal__modal-title" id="modalTitle">Évènements</div>
+                    <button id="modalClose" aria-label="Fermer" class="cal__modal-close" hidden>✕</button>
+                </div>
+                <div class="cal__modal-body" id="modalBody"></div>
+            </div>
+        </div>
+    </section>
 
- <!----------------------------- FOOTER----------------------  -->
+    <!----------------------------- FOOTER----------------------  -->
  
     <section class="contact">
         <div class="footer-bottom">
@@ -129,7 +122,6 @@
     <script>
         AOS.init();
     </script>
-    <!-- ical.js nécessaire -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ical.js/1.4.0/ical.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js" integrity="sha512-UxP+UhJaGRWuMG2YC6LPWYpFQnsSgnor0VUF3BHdD83PS/pOpN+FYbZmrYN+ISX8jnvgVUciqP/fILOXDjZSwg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="app.js"></script>
