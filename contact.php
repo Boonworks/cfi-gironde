@@ -353,7 +353,7 @@ if (is_post()) {
               				<option value="Formation de Nageur Sauveteur" <?php echo (($_POST['motif'] ?? '')==='Formation de Nageur Sauveteur')?'selected':''; ?>>Formation de nageur sauveteur</option>
               				<option value="Formation PSE" <?php echo (($_POST['motif'] ?? '')==='Formation PSE')?'selected':''; ?>>Formation PSE1&2</option>
               				<option value="Formation PSC" <?php echo (($_POST['motif'] ?? '')==='Formation PSC')?'selected':''; ?>>Formation PSC</option>
-              				<option value="Autre" <?php echo (($_POST['motif'] ?? '')==='Autre')?'selected':''; ?>>Autre</option>
+							<option value="Autre" <?php echo (($_POST['motif'] ?? '')==='Autre')?'selected':''; ?>>Autre</option>
             			</select>
           			</div>
 
