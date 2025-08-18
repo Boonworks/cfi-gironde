@@ -28,6 +28,369 @@
 
 </head>
 
+<!-- ical.js nécessaire -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ical.js/1.4.0/ical.min.js"></script>
+
+<script>
+// === Calendrier encapsulé pour éviter les collisions ===
+document.addEventListener('DOMContentLoaded', function(){
+(function(){
+  const locale = 'fr-FR';
+  const monthFormatter = new Intl.DateTimeFormat(locale,{month:'long',year:'numeric'});
+  const timeFormatter  = new Intl.DateTimeFormat(locale,{hour:'2-digit',minute:'2-digit'});
+
+  const grid   = document.getElementById('calGrid');
+  const titleN = document.getElementById('calTitle');
+  const alertN = document.getElementById('calAlert');
+  const prev   = document.getElementById('calPrev');
+  const next   = document.getElementById('calNext');
+
+  function startOfMonth(d){return new Date(d.getFullYear(),d.getMonth(),1)}
+  function addMonths(d,n){return new Date(d.getFullYear(),d.getMonth()+n,1)}
+  function isSameDay(a,b){return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate()}
+  function dateKey(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,'0')+"-"+String(d.getDate()).padStart(2,'0');}
+
+  let currentMonth = startOfMonth(new Date());
+  let eventsByDay = new Map();
+
+  function windowRange(base){
+    const viewStart = new Date(base.getFullYear(), base.getMonth()-1, 1);
+    const viewEnd   = new Date(base.getFullYear(), base.getMonth()+2, 0, 23,59,59,999);
+    return {viewStart, viewEnd};
+  }
+  function ensureBucket(d){ const k=dateKey(d); if(!eventsByDay.has(k)) eventsByDay.set(k, []); return k; }
+
+  function occKeyFromICALTime(t){
+    if(!t) return '';
+    const pad = n => String(n).padStart(2,'0');
+    if (t.isDate) return `D${t.year}${pad(t.month)}${pad(t.day)}`;
+    return `T${t.toUnixTime()}`;
+  }
+
+  function pushSpan(s, e, payload, viewStart, viewEnd){
+    const d0 = new Date(s.getFullYear(), s.getMonth(), s.getDate());
+    const d1 = new Date(e.getFullYear(), e.getMonth(), e.getDate());
+    for(let d=new Date(d0); d<=d1; d.setDate(d.getDate()+1)){
+      if(d<viewStart || d>viewEnd) continue;
+      const k = ensureBucket(d);
+      eventsByDay.get(k).push({...payload, _isContinuation: !isSameDay(d, d0)});
+    }
+  }
+  function durMsFrom(ev){
+    if(ev.duration) return ev.duration.toSeconds()*1000;
+    if(ev.startDate && ev.endDate) return (ev.endDate.toUnixTime()-ev.startDate.toUnixTime())*1000;
+    return 0;
+  }
+
+  function buildIndexFromGroups(groups, singles){
+    eventsByDay = new Map();
+    const {viewStart, viewEnd} = windowRange(currentMonth);
+
+    for(const g of groups.values()){
+      const master = g.master; const exceptions = g.exceptions||[];
+      if(!master) continue;
+
+      const exMap = new Map();
+      for (const ex of exceptions) {
+        let ridTime = null;
+        const ridProp = ex.component && ex.component.getFirstProperty('recurrence-id');
+        if (ridProp) ridTime = ridProp.getFirstValue();
+        else if (ex.recurrenceId) ridTime = ex.recurrenceId;
+        if (ridTime) exMap.set(occKeyFromICALTime(ridTime), ex);
+      }
+
+      const exp = master.iterator();
+      const masterDur = durMsFrom(master);
+      let next;
+      const seen = new Set();
+
+      while((next = exp.next())){
+        const js = next.toJSDate();
+        if(js > viewEnd) break;
+        if(js < viewStart) continue;
+
+        const key = occKeyFromICALTime(next);
+        seen.add(key);
+
+        const use = exMap.get(key) || null;
+        if(use){
+          const s = use.startDate.toJSDate();
+          const e = use.endDate ? use.endDate.toJSDate() : new Date(s.getTime()+masterDur);
+          pushSpan(s, e, {summary: use.summary, dtstart: s, dtend: e, location: use.location, description: use.description}, viewStart, viewEnd);
+        }else{
+          const e = new Date(js.getTime()+masterDur);
+          pushSpan(js, e, {summary: master.summary, dtstart: js, dtend: e, location: master.location, description: master.description}, viewStart, viewEnd);
+        }
+      }
+
+      const rrule = master.component.getFirstPropertyValue('rrule');
+      if(rrule && rrule.until){
+        const u = rrule.until;
+        const uKey = occKeyFromICALTime(u);
+        if(!seen.has(uKey)){
+          const use = exMap.get(uKey) || null;
+          const uj = u.toJSDate();
+          if(uj >= viewStart && uj <= viewEnd){
+            if(use){
+              const s = use.startDate.toJSDate();
+              const e = use.endDate ? use.endDate.toJSDate() : new Date(s.getTime()+masterDur);
+              pushSpan(s, e, {summary:use.summary, dtstart:s, dtend:e, location:use.location, description:use.description}, viewStart, viewEnd);
+            }else{
+              const e = new Date(uj.getTime()+masterDur);
+              pushSpan(uj, e, {summary:master.summary, dtstart:uj, dtend:e, location:master.location, description:master.description}, viewStart, viewEnd);
+            }
+          }
+        }
+      }
+    }
+
+    for(const s of singles){
+      const js = s.startDate.toJSDate();
+      const je = s.endDate ? s.endDate.toJSDate() : new Date(js.getTime());
+      if(je < viewStart || js > viewEnd) continue;
+      pushSpan(js, je, {summary:s.summary, dtstart:js, dtend:je, location:s.location, description:s.description}, viewStart, viewEnd);
+    }
+
+    for (const arr of eventsByDay.values()) arr.sort((a,b)=>a.dtstart-b.dtstart);
+  }
+
+  function eventsForDay(day){ return eventsByDay.get(dateKey(day)) || []; }
+
+  function renderCalendar(){
+    titleN.textContent = monthFormatter.format(currentMonth).toUpperCase();
+    grid.innerHTML = '';
+
+    const start = startOfMonth(currentMonth);
+    const startDay = (start.getDay()+6)%7; // lundi=0
+    const total = 35;
+    const today = new Date();
+
+    const frag = document.createDocumentFragment();
+    for(let i=0;i<total;i++){
+      const cellDate=new Date(start);
+      cellDate.setDate(cellDate.getDate()-startDay+i);
+      const inMonth = cellDate.getMonth()==currentMonth.getMonth();
+
+      const div=document.createElement('div');
+      div.className='cal__day'+(inMonth?'':' out');
+      if(isSameDay(cellDate,today)) div.classList.add('today');
+      div.dataset.date=cellDate.toISOString();
+
+      const badge=document.createElement('div');
+      badge.className='cal__badge';
+      badge.textContent=cellDate.getDate();
+      div.appendChild(badge);
+
+      const evs=eventsForDay(cellDate);
+      const list=document.createElement('div'); list.className='cal__events';
+      if(evs.length){
+        div.classList.add('has-events');
+        for(const ev of evs){
+          const row=document.createElement('div');
+          row.className='cal__chip'+(ev._isContinuation?' multi':'');
+          const t0 = ev.dtstart ? timeFormatter.format(ev.dtstart) : '';
+          row.innerHTML = (t0 ? `<span class="t">${t0}</span>` : '') + `<span class="s">${ev.summary || ''}</span>`;
+          row.dataset.time = t0 || '';
+          row.dataset.title = ev.summary || '';
+          row.title = (t0 ? `${t0} — ` : '') + (ev.summary || '');
+          list.appendChild(row);
+        }
+      }
+      div.appendChild(list);
+      frag.appendChild(div);
+    }
+    grid.appendChild(frag);
+
+    adaptDayLayouts(); // responsive after render
+  }
+
+  // Responsive: heure seule / emoji si peu d'espace
+  function emojiFor(title){
+    const t = (title || '').toLowerCase();
+    if (t.includes('bnssa')) return '🏊';
+    if (t.includes('océan') || t.includes('ocean')) return '🌊';
+    if (t.includes('secours')) return '🚑';
+    if (t.includes('réunion')) return '📣';
+    if (t.includes('ppg')) return '🏋️';
+    if (t.includes('pilotage') || t.includes('embarcation')) return '🛶';
+    return '📌';
+  }
+
+  function adaptOneDayCell(day){
+    const evs = day.querySelectorAll('.cal__chip');
+    if (!evs.length) { day.classList.remove('compact','icon'); return; }
+
+    const rect = day.getBoundingClientRect();
+    const badge = day.querySelector('.cal__badge');
+    const badgeH = badge ? badge.getBoundingClientRect().height : 18;
+    const available = rect.height - badgeH - 10;
+    const manyEvents = evs.length >= 4;
+
+    day.classList.remove('compact','icon');
+
+    if (available < 70 || manyEvents) {
+      day.classList.add('icon');
+      evs.forEach((chip, i) => {
+        const emoji = emojiFor(chip.dataset.title);
+        chip.textContent = emoji;
+        chip.title = chip.dataset.time ? `${chip.dataset.time} — ${chip.dataset.title}` : chip.dataset.title;
+        chip.style.display = (i > 2 ? 'none' : '');
+      });
+      return;
+    }
+
+    if (available < 92) {
+      day.classList.add('compact');
+      evs.forEach(chip => {
+        chip.innerHTML = chip.dataset.time ? `<span class="t">${chip.dataset.time}</span>` : '•';
+        chip.title = chip.dataset.title ? `${chip.dataset.time || ''} ${chip.dataset.title}`.trim() : chip.title;
+        chip.style.display = '';
+      });
+      return;
+    }
+
+    evs.forEach(chip => {
+      chip.innerHTML = (chip.dataset.time ? `<span class="t">${chip.dataset.time}</span>` : '') +
+                       `<span class="s">${chip.dataset.title}</span>`;
+      chip.style.display = '';
+    });
+  }
+  function adaptDayLayouts(){
+    document.querySelectorAll('.cal__grid .cal__day').forEach(adaptOneDayCell);
+  }
+
+  function registerTzAliases(){
+    if (!window.ICAL || !ICAL.TimezoneService) return;
+    const TZ_ALIASES = {
+      'Romance Standard Time': 'Europe/Paris',
+      'W. Europe Standard Time': 'Europe/Berlin',
+      'Central European Standard Time': 'Europe/Warsaw',
+    };
+    for (const [win, iana] of Object.entries(TZ_ALIASES)) {
+      try {
+        const zone = ICAL.TimezoneService.get(iana);
+        if (zone) ICAL.TimezoneService.register(win, zone);
+      } catch(e){}
+    }
+  }
+
+  async function loadEvents(){
+    alertN.classList.remove('show');
+    try{
+      const res=await fetch('calendar.ics',{cache:'no-store'});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const text=await res.text();
+
+      registerTzAliases();
+
+      const jcal=ICAL.parse(text);
+      const comp=new ICAL.Component(jcal);
+      const vevents=comp.getAllSubcomponents('vevent').map(v=> new ICAL.Event(v));
+
+      const groups = new Map();
+      const singles = [];
+      for(const ev of vevents){
+        const uid = ev.uid || (ev.component && ev.component.getFirstPropertyValue('uid')) || Math.random().toString(36).slice(2);
+        const isExc = ev.isRecurrenceException && ev.isRecurrenceException();
+        const isRec = ev.isRecurring && ev.isRecurring();
+        if(isExc){
+          if(!groups.has(uid)) groups.set(uid, {master:null, exceptions:[]});
+          groups.get(uid).exceptions.push(ev);
+        }else if(isRec){
+          if(!groups.has(uid)) groups.set(uid, {master:null, exceptions:[]});
+          if(!groups.get(uid).master) groups.get(uid).master = ev;
+        }else{
+          singles.push(ev);
+        }
+      }
+
+      buildIndexFromGroups(groups, singles);
+      renderCalendar();
+    }catch(e){
+      alertN.textContent="Impossible de charger calendar.ics : "+e.message;
+      alertN.classList.add('show');
+      console.error(e);
+    }
+  }
+
+  // UI
+  prev.addEventListener('click', ()=>{ currentMonth=addMonths(currentMonth,-1); loadEvents(); });
+  next.addEventListener('click', ()=>{ currentMonth=addMonths(currentMonth, 1); loadEvents(); });
+
+  document.getElementById('calGrid').addEventListener('click', (e)=>{
+    const day = e.target.closest('.cal__day');
+    if(!day) return;
+    openModalForDate(day.dataset.date);
+  });
+
+function lock(){ 
+  document.documentElement.classList.add('alb-noscroll'); 
+  document.body.classList.add('alb-noscroll'); 
+}
+function unlock(){ 
+  document.documentElement.classList.remove('alb-noscroll'); 
+  document.body.classList.remove('alb-noscroll'); 
+}
+
+
+
+  function openModalForDate(dateISO){
+    const modal=document.getElementById('eventModal');
+    const body=document.getElementById('modalBody');
+    const title=document.getElementById('modalTitle');
+    if(!dateISO) return;
+    const d=new Date(dateISO);
+    const evs=eventsForDay(d);
+    title.textContent = d.toLocaleDateString(locale, {weekday:'long', day:'2-digit', month:'long', year:'numeric'}).toUpperCase();
+    body.innerHTML='';
+    if(!evs.length){
+      body.innerHTML='<div class="cal__meta">Aucun évènement</div>';
+    }else{
+      for(const ev of evs){
+        const card=document.createElement('div'); card.className='cal__card';
+        const h=document.createElement('h4'); h.textContent=ev.summary||'(Sans titre)';
+        const meta=document.createElement('div'); meta.className='cal__meta';
+        const t0 = ev.dtstart ? timeFormatter.format(ev.dtstart) : '';
+        const t1 = ev.dtend? ' – '+timeFormatter.format(ev.dtend):'';
+        meta.textContent = (t0?t0:'')+(t1?t1:'')+(ev.location?'\n'+ev.location:'');
+        const extra=document.createElement('div'); extra.className='cal__meta'; extra.textContent = ev.description||'';
+        card.append(h, meta, extra); body.appendChild(card);
+      }
+    }
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden','false');
+    lock(); 
+
+
+  }
+
+  // close modal: clic sur fond + ESC
+  const modalClose = document.getElementById('modalClose');
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+  document.getElementById('eventModal').addEventListener('click', (e)=>{ if(e.target.id==='eventModal') closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+  function closeModal(){
+    const modal=document.getElementById('eventModal');
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden','true');
+    unlock(); 
+
+ 
+  }
+
+  // Resize → recalcul
+  window.addEventListener('resize', adaptDayLayouts);
+  new ResizeObserver(adaptDayLayouts).observe(document.getElementById('calGrid'));
+
+  // GO
+  loadEvents();
+})();
+});
+</script>
+
+
+
+
 <body>
     <section class="accueil">
         <div class="overlay">   
@@ -71,26 +434,40 @@
     </section>
 
 <!----------------------------- SECTION PRINCIPALE----------------------  -->
+<!-- === Calendrier === -->
+<section id="calendrier" class="cal">
+  <main class="cal__root" aria-label="Calendrier mensuel">
+    <header class="cal__header">
+      <div class="cal__nav">
+        <button id="calPrev" aria-label="Mois précédent">◀</button>
+        <button id="calNext" aria-label="Mois suivant">▶</button>
+      </div>
+      <div class="cal__title" id="calTitle">Mois ANNÉE</div>
+      <span></span>
+    </header>
 
-    <section class="calendrier" id="calendrier">
-        <div class="container">
-            <div class="entete">
-                <div class="entete__titre">
-                    <h2>Calendrier de formation</h2>
-                <div class="barre"></div>
-            </div>
-        </div>
-            <div class="calendrier__iframe">
-                <iframe 
-                    src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FParis&showPrint=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=ZDNiOTBkMDAzZWFhMGFlNjVhZGI3MzgzZDU5NWFkMDU5ODM4MGEyOTE5ZDQ0ZDZkY2RhYjU1NTVmZjFmMWExOUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23EF6C00" 
-                    style="border:0" 
-                    width="800" 
-                    height="600" 
-                    frameborder="0" 
-                    scrolling="no">
-                </iframe>
-            </div>
-    </section>
+    <div class="cal__weekdays" aria-hidden="true">
+      <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
+    </div>
+
+    <section class="cal__grid" id="calGrid"></section>
+    <div id="calAlert" class="cal__alert" role="alert" aria-live="polite"></div>
+  </main>
+
+  <!-- Modal (overlay page) -->
+  <div id="eventModal" class="cal__modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="cal__modal-card">
+      <div class="cal__modal-head">
+        <div class="cal__modal-title" id="modalTitle">Évènements</div>
+        <!-- Croix masquée visuellement -->
+        <button id="modalClose" aria-label="Fermer" class="cal__modal-close" hidden>✕</button>
+      </div>
+      <div class="cal__modal-body" id="modalBody"></div>
+    </div>
+  </div>
+</section>
+<!-- === /Calendrier === -->
+
 
  <!----------------------------- FOOTER----------------------  -->
  

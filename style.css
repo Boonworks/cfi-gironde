@@ -493,27 +493,6 @@ canvas {
     padding-right: 1rem;
   }
 
-
-/* ____________________CALENDRIER____________________________ */
-
-
-
-.calendrier {
-    background: #fff;
-    padding-top: 1rem;
-    padding-bottom: 4rem;
-  }
-
-  .calendrier__iframe iframe {
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    height: 600px;
-  }
-
-
-
-
 /* ____________________inscriptions____________________________ */
 
 
@@ -599,7 +578,7 @@ canvas {
   font-weight: bold;
 }
 
-/* 🧩 Style unifié pour tous les champs */
+/*  Style unifié pour tous les champs */
 .contact-form input,
 .contact-form textarea,
 .contact-form select {
@@ -851,7 +830,7 @@ body.alb-noscroll {
 }
 
 
-                    /* Contact PSE et PSC  */
+/* =====================Contact PSE et PSC ================= */
 
 .bloc-contact {
     margin-top: 50px;
@@ -873,3 +852,114 @@ body.alb-noscroll {
 }
 
 
+/* ==== CALENDRIER (scopé) ==== */
+.cal{
+  --cal-width: min(100%, 1000px);
+  --cal-bg: #F5F5F5;
+  --cal-fg: #0a2a43;
+  --cal-accent: #0a2a43;
+  --cal-muted: #ccc;
+  --cal-grid: #ccc;
+  --cal-today: #bee3ff;
+  --cal-radius: 18px;
+  --cal-shadow: 0 10px 30px rgba(0,0,0,.35);
+  --cal-font: 'Roboto', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, "Noto Sans", sans-serif;
+  --cal-title-font: 'Abril Fatface', cursive;
+  --day-size: clamp(76px, 12vw, 130px);
+  --gap: 4px;
+
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.cal__root{
+  margin:auto;
+  width:var(--cal-width);
+  background:var(--cal-bg);
+  color:var(--cal-fg);
+  border-radius:var(--cal-radius);
+  box-shadow:var(--cal-shadow);
+  padding:1rem;
+  display:flex;
+  flex-direction:column;
+  font-family:var(--cal-font);
+}
+
+.cal__header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;}
+.cal__title{font-size:1.4rem;text-transform:uppercase;font-family:var(--cal-title-font);letter-spacing:0.5px}
+.cal__nav{display:flex;gap:.5rem}
+.cal__nav button{cursor:pointer;font-size:1rem;padding:.4rem .6rem;border-radius:10px;border:1px solid var(--cal-grid);background:#fff;color:var(--cal-fg)}
+
+.cal__weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--gap);margin:.25rem 0 .5rem 0;font-size:.85rem;color:var(--cal-muted)}
+.cal__weekdays div{text-align:center;}
+
+.cal__grid{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--gap);position:relative;z-index:1; /* max-height: 70vh; adapte à l’écran */}
+
+.cal__day{
+  position:relative;box-sizing:border-box;width:100%;height:var(--day-size);padding:6px;border:1px solid var(--cal-grid);
+  font-size:.85rem;cursor:pointer;display:flex;flex-direction:column;overflow:hidden;background:#fff;
+}
+
+/* Cases globalement plus plates */
+.cal {
+  /* baisse la hauteur des cases */
+  --day-size: clamp(60px, 10vw, 120px); /* ajuste à ton goût */
+}
+
+html { scrollbar-gutter: stable both-edges; }
+
+
+.cal__modal { 
+  overflow-y: auto; 
+  -webkit-overflow-scrolling: touch;
+}
+
+
+
+.cal__modal { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+
+
+
+.cal__day.today{background:var(--cal-today);}
+.cal__day.out{opacity:.45;background:#ccc;}
+.cal__badge{font-weight:700;line-height:1;}
+.cal__events{margin-top:4px;overflow:auto;flex:1;min-height:0;display:flex;flex-direction:column;gap:2px;}
+.cal__chip{
+  font-size:.72rem;white-space:normal;overflow:hidden;text-overflow:ellipsis;background:#ccc;border:1px solid #ccc;border-radius:6px;
+  padding:2px 4px; line-height:1.15; display:flex; gap:4px; align-items:flex-start; flex-wrap:wrap;
+}
+.cal__chip .t{ font-weight:700; display:block; }
+.cal__chip .s{ display:block; }
+
+/* états responsives pilotés au JS */
+.cal__day.compact .cal__chip .s { display:none; }
+.cal__day.icon    .cal__chip .t,
+.cal__day.icon    .cal__chip .s { display:none; }
+.cal__day.icon    .cal__chip { justify-content:center; text-align:center; }
+
+/* Mobile tweaks */
+@media (max-width: 520px){
+  .cal{ padding: 16px; }
+  .cal__day{ padding:4px; }
+  .cal__chip{ font-size:.68rem; padding:1px 3px; }
+}
+
+/* Alert */
+.cal__alert{display:none;margin:8px 0;padding:8px 12px;background:#3a1212;border:1px solid #a33;border-radius:8px;color:#ffd7d7}
+.cal__alert.show{display:block}
+
+/* Modal */
+.cal__modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:saturate(180%) blur(3px);z-index:9999}
+.cal__modal.show{display:flex}
+.cal__modal-card{margin:auto;width:min(92vw,820px);max-height:82vh;overflow:auto;background:#fff;border:1px solid #fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.cal__modal-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #fff}
+.cal__modal-title{font-weight:700;font-family:var(--cal-title-font);}
+.cal__modal-body{padding:12px 16px;display:flex;flex-direction:column;gap:10px;white-space:pre-line;}
+.cal__card{border:1px solid #ccc;border-radius:12px;padding:10px;background:#fff}
+.cal__card h4{margin:0 0 4px 0;font-size:1rem}
+.cal__meta{font-size:.9rem;color:#0a2a43;white-space:pre-line;}
+/* Bouton croix caché visuellement (tu peux le remettre en enlevant hidden dans le HTML) */
+.cal__modal-close{display:none;}
+/* ==== /CALENDRIER ==== */
