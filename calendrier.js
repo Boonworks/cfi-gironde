@@ -274,10 +274,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function emojiFor(title){
     const t = (title || '').toLowerCase();
     if (t.includes('bnssa')) return '🏊';
-    if (t.includes('océan') || t.includes('ocean')) return '🌊';
+    if (t.includes('océan') || t.includes('ocean') || t.includes('Pratique')) return '🌊';
     if (t.includes('secours')) return '🚑';
     if (t.includes('réunion')) return '📣';
-    if (t.includes('ppg')) return '🏋️';
+    if (t.includes('ppg') || t.includes('Théorie')) return '🏋️';
     if (t.includes('pilotage') || t.includes('embarcation')) return '🛶';
     return '📌';
   }
