@@ -9,9 +9,7 @@
 
 ## À propos
 Le Centre de formation et d'intervention (CFI) de Gironde est l’un des 32 CFI existants en France. 
-
 Il participe depuis 50 ans à la formation des 500 nouveaux nageurs sauveteurs formés par la SNSM.  
-
 Basé sur un engagement bénévole, le centre mobilise des formateurs passionnés pour transmettre leur savoir faire.    
 
 <p align="center">
