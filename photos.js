@@ -50,8 +50,8 @@
     setImg(st.items[st.index].href);
     if(st.items[st.index+1]) preload(st.items[st.index+1].href);
   }
-
-  // Ouvrir depuis la vignette
+  
+//======================= Ouvrir depuis la vignette =======================
   document.addEventListener('click', e=>{
     const img=e.target.closest('img.alb-item, img.album__item');
     if(!img) return;
@@ -62,19 +62,19 @@
     openAt(g, i);
   }, {passive:false});
 
-  // Clic image => suivante
+//======================= Clic image => suivante =======================
   document.addEventListener('click', e=>{
     if(!st.open) return;
     if(e.target === qs('[data-alb-img]', st.lightbox)) next(1);
   });
 
-  // Clic fond => fermer
+//======================= Clic fond => fermer =======================
   document.addEventListener('click', e=>{
     if(!st.open) return;
     if(e.target.classList.contains('alb-backdrop') || e.target.dataset.albClose!==undefined) close();
   });
 
-  // Clavier
+//======================= Clavier =======================
   document.addEventListener('keydown', e=>{
     if(!st.open) return;
     if(e.key==='Escape'){ e.preventDefault(); close(); }
