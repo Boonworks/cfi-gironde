@@ -3,7 +3,7 @@
 
 **Site web** du *Centre de Formation et d’Intervention* (CFI) **SNSM de Gironde**. 
 
- **Accès au site :** [cfi-gironde.fr](https://cfi-gironde.fr)
+ **Accès au site :** [cfi-gironde.fr](https://cfi-gironde.fr/)
 
 ---
 
