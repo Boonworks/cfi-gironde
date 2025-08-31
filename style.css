@@ -272,11 +272,12 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 
 @media (max-width: 768px) {
     .img-site {height: 100%;}
-    .img-cfi {width: 100%;}
-    .img-logo-cfi {width: 40%;}
+    .img-cfi {width: 90%;}
+    .img-logo-cfi {width: 25%;}
     .footer-barre{max-width: 500px;}
     .footer-block {max-width: 480px;}
 }
+
 @media (max-width: 480px) {
     .img-site {height: 100%;}
     .img-cfi {width:100%;}
