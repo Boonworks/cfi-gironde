@@ -225,6 +225,8 @@ if (is_post()) {
 }
 ?>
 
+<!-- =========================== Page HTML =========================== -->
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -248,9 +250,12 @@ if (is_post()) {
   	<link rel="apple-touch-icon" href="/img/web/apple-icon.png" sizes="180x180">
 
   	<!-- reCAPTCHA v3 -->
-  <script src="https://www.google.com/recaptcha/api.js?render=<?php echo e($RECAPTCHA_SITE_KEY); ?>"></script>
+  	<script src="https://www.google.com/recaptcha/api.js?render=<?php echo e($RECAPTCHA_SITE_KEY); ?>"></script>
 
 </head>
+
+<!-- =========================== Accueil & Menu =========================== -->
+
 <body>
   	<section class="accueil">
     	<div class="overlay">
@@ -290,7 +295,8 @@ if (is_post()) {
     	</div>
 	</section>
 
-  	<!-- Messages retour -->
+    <!-- =========================== PHP =========================== -->
+
   	<?php if ($success && !$errors): ?>
     <div style="max-width:900px;margin:1rem auto;padding:1rem;border-radius:10px;background:#e8fff0;border:1px solid #b7f0c5;color:#134e22">
       	Merci, votre message a bien été envoyé.
@@ -303,7 +309,8 @@ if (is_post()) {
     </div>
   	<?php endif; ?>
 
-  	<!-- SECTION PRINCIPALE -->
+    <!-- =========================== Corps =========================== -->
+
   	<section class="section-contact">
     	<div class="contact-container">
       		<div class="contact-info" data-aos="zoom-in" data-aos-delay="100">
@@ -325,7 +332,8 @@ if (is_post()) {
         		</div>
       		</div>
 
-      		<!-- Formulaire -->
+    		<!-- =========================== Formulaire =========================== -->
+
       		<div class="contact-form" data-aos="fade-up" data-aos-delay="100">
         		<form action="" method="post" id="contactForm">
           			<input type="hidden" name="csrf" value="<?php echo e($_SESSION['csrf']); ?>">
@@ -383,7 +391,8 @@ if (is_post()) {
     	</div>
   	</section>
 
-  	<!-- FOOTER -->
+    <!-- =========================== Footer =========================== -->
+
   	<footer class="footer">
         <div class="footer-barre"></div>
         <div class="footer-block">
@@ -398,6 +407,8 @@ if (is_post()) {
             </a>
         </div>
     </footer>
+
+    <!-- =========================== JS =========================== -->
 
   	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   	<script> AOS.init(); </script>
