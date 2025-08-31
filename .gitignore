@@ -1,11 +1,8 @@
-config
-config/config.mail.php
-config/codes_serveur.md
-
-img/album
-img/galerie
-
-phpmailer
+config/
+img/
+img/web
+phpmailer/
+calendrier_promo.ics
 
 .htaccess
 sitemap.xml
@@ -13,5 +10,3 @@ robots.txt
 llms.txt
 
 dispositifs-previsionnels-de-secours.html
-
-calendrier_promo.ics
