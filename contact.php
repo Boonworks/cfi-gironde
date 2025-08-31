@@ -255,7 +255,7 @@ if (is_post()) {
   	<section class="accueil">
     	<div class="overlay">
       		<div class="logo">
-          		<img src="img/web/logo.png" alt="logo"/>
+          		<img src="img/web/logo.png" oncontextmenu="return false;"/>
       		</div>
 
       		<ul class="menu">
@@ -386,10 +386,10 @@ if (is_post()) {
   	<!-- FOOTER -->
   	<section class="contact">
     	<div class="footer-bottom">
-      		<img src="img/web/logo.png">
+      		<img src="img/web/logo.png"oncontextmenu="return false;">
       		<a href="index.html">&copy; <span id="year"></span> SNSM GIRONDE</a>
       		<a href="https://www.instagram.com/cfi_gironde_snsm?igsh=MWJtZW82Z2Ntdm5meA==" target="_blank" aria-label="Instagram">
-        		<img src="img/web/insta.png" alt="Instagram">
+        		<img src="img/web/insta.png" oncontextmenu="return false;">
       		</a>
     	</div>
     	<div class="footer">

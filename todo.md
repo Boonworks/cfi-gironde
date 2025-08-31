@@ -3,7 +3,6 @@
 ## Contenu
 
 * Reprendre des photos pour le site sur les pages de formation et présentation.
-  * Ajouter **l'affiche visuelle** pour le recrutement
   * Intégrer **une photo représentative du CFI**
 
 ## Pages DPS
@@ -67,7 +66,6 @@ Disallow: calendrier_promo.ics
 
 ## Others
 
-* Ajouter le **logo du CFI**.
 * Publicité Insta & site **snsm.org**
 * Valider DNS search console
 
