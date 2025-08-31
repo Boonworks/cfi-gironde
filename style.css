@@ -2,36 +2,36 @@
     Base & Variables
     ========================================================= */
 :root {
-  --color1: #fff;
-  --color2: #0a2a43;
-  --color3: #292a2b;
-  --color10: #bee3ff;
-  --shadow: 0 6px 20px rgba(0,0,0,.08);
+    --color1: #fff;
+    --color2: #0a2a43;
+    --color3: #292a2b;
+    --color10: #bee3ff;
+    --shadow: 0 6px 20px rgba(0,0,0,.08);
 
-  --font1: 'Abril Fatface', cursive;
-  --font2: 'Roboto', sans-serif;
+    --font1: 'Abril Fatface', cursive;
+    --font2: 'Roboto', sans-serif;
 
-  /* Album (alb-*) */
-  --alb-gap: 12px;
-  --alb-radius: 8px;
-  --alb-shadow: 0 6px 20px rgba(0,0,0,.08);
-  --alb-overlay: rgba(10,10,12,.82);
-  --alb-z: 10000 ;
+    /* Album (alb-*) */
+    --alb-gap: 12px;
+    --alb-radius: 8px;
+    --alb-shadow: 0 6px 20px rgba(0,0,0,.08);
+    --alb-overlay: rgba(10,10,12,.82);
+    --alb-z: 10000 ;
 
-  /* Calendar (cal-*) */
-  --cal-width: min(100%, 1000px);
-  --cal-bg: #F5F5F5;
-  --cal-fg: #0a2a43;
-  --cal-accent: #0a2a43;
-  --cal-muted: #ccc;
-  --cal-grid: #ccc;
-  --cal-today: #bee3ff;
-  --cal-radius: 18px;
-  --cal-shadow: 0 10px 30px rgba(0,0,0,.35);
-  --cal-font: 'Roboto', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, "Noto Sans", sans-serif;
-  --cal-title-font: 'Abril Fatface', cursive;
-  --day-size: clamp(60px, 10vw, 120px);
-  --gap: 4px;
+    /* Calendar (cal-*) */
+    --cal-width: min(100%, 1000px);
+    --cal-bg: #F5F5F5;
+    --cal-fg: #0a2a43;
+    --cal-accent: #0a2a43;
+    --cal-muted: #ccc;
+    --cal-grid: #ccc;
+    --cal-today: #bee3ff;
+    --cal-radius: 18px;
+    --cal-shadow: 0 10px 30px rgba(0,0,0,.35);
+    --cal-font: 'Roboto', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, "Noto Sans", sans-serif;
+    --cal-title-font: 'Abril Fatface', cursive;
+    --day-size: clamp(60px, 10vw, 120px);
+    --gap: 4px;
 }
 
 /* Reset */
@@ -47,9 +47,9 @@ body { font-family: var(--font2); }
 /* Type basics */
 h1, h2, h3, h4, h5, h6 { font-weight: 400; }
 
-/* =========================================================
-   Header / Hero (Accueil)
-   ========================================================= */
+/*  =========================================================
+    Header / Hero (Accueil)
+    ========================================================= */
 .accueil { position: relative; height: 100vh; background: center / cover no-repeat url('img/web/hero.webp'); }
 .accueil .toggle { display: none; }
 
@@ -60,9 +60,9 @@ h1, h2, h3, h4, h5, h6 { font-weight: 400; }
 
 canvas { border: none; box-shadow: none; background: #1e90ff; }
 
-/* =========================================================
-   Navigation & Submenu
-   ========================================================= */
+/*  =========================================================
+    Navigation & Submenu
+    ========================================================= */
 .menu { position: absolute; top: 2.75rem; left: 50%; transform: translateX(-50%); display: flex; justify-content: space-between; width: 550px; list-style: none; }
 .menu li a { color: var(--color10); text-decoration: none; text-transform: uppercase; font-weight: 300; letter-spacing: 2px; }
 
@@ -74,19 +74,18 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 
 @media (min-width: 992px) { .has-submenu:hover .submenu { display: block; } }
 
-/* =========================================================
-   Accueil Text
-   ========================================================= */
+/*  =========================================================
+    Accueil Text
+    ========================================================= */
 .accueil__text { width: 80%; }
 .accueil__text__top { display: flex; align-items: center; }
 .accueil__text__top .sep { width: 120px; height: 2px; background: var(--color1); }
 .accueil__text__top p { margin-left: 1rem; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; }
 .accueil__text__mid h1 { margin: 1rem 0 2rem; font-family: var(--font1); font-weight: 400; font-size: 8rem; line-height: 11rem; }
 
-/* =========================================================
-   About
-   ========================================================= */
-.about { padding-block: 3rem; color: var(--color3); }
+/*  =========================================================
+    About
+    ========================================================= */
 .entete { display: flex; padding-top: 2rem; }
 .entete__slogan { width: 30%; display: flex; justify-content: center; align-items: center; padding-bottom: 1rem; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; }
 .entete__titre { width: 100%; padding: 1rem 0 0 1rem; }
@@ -95,28 +94,28 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 .entete__titre .barre2 { width: 120px; height: 5px; background: var(--color1); margin: 1rem 0 1.5rem; }
 .entete__titre p { line-height: 1.4rem; }
 
+.about { padding-block: 3rem; color: var(--color3); }
 .about__corps { margin-top: 1rem; display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; }
 .about__corps__block { width: 31%; }
 .about__corps__block img { width: 100%; border-radius: 8px; }
 .about__corps__block h3 { margin: .5rem 0 1rem; font-family: var(--font1); font-size: 1.5rem; }
 .about__corps__block p { line-height: 1.4rem; }
 
-/* =========================================================
-   Work
-   ========================================================= */
+/*  =========================================================
+    Work
+    ========================================================= */
 .work { background: var(--color2); color: var(--color1); padding-block: 3rem; }
 .work .barre { background: var(--color1); }
 .work__corps { margin-top: 3rem; display: grid; grid-template-columns: repeat(3, 1fr); }
 .work__corps__block { position: relative; }
-/* Shared position for h3/h4 */
 .work__corps__block h3,
 .work__corps__block h4 { position: absolute; left: 1rem; bottom: 2rem; font-family: var(--font1); font-size: 2rem; }
 .work__corps__block h4 { color: var(--color1); }
 .work__corps__block .barre { position: absolute; left: 1rem; bottom: 1.5rem; width: 120px; height: 5px; background: var(--color2); }
 
-/* =========================================================
-   Contact
-   ========================================================= */
+/*  =========================================================
+    Contact
+    ========================================================= */
 .contact { margin-top: 2rem; padding: 1rem 0 3rem; background: var(--color2); color: var(--color1); }
 .contact a { text-decoration: none; color: var(--color10); }
 
@@ -131,12 +130,13 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 .contact-form select { background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 8L0.803848 0.5L11.1962 0.5L6 8Z' fill='%23333'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 12px; }
 .contact-form button { background: var(--color2); color: #fff; padding: .8rem 1.5rem; border: none; border-radius: .5rem; cursor: pointer; font-weight: bold; transition: background-color .3s ease; }
 .contact-form button:hover { background: var(--color10); }
+
 .consent label { display: block; }
 .consent .privacy-right { display: block; text-align: right; margin-top: 1.25rem; text-decoration: none; }
 
-/* =========================================================
-   Buttons & Links
-   ========================================================= */
+/*  =========================================================
+    Btn & Liens
+    ========================================================= */
 .btn { border: 0; padding: .5rem 1rem; margin-top: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
 .btn-inscription { background: var(--color2); color: #fff; padding: .8rem 1.5rem; border: none; border-radius: .5rem; text-decoration: none; cursor: pointer; font-weight: bold; transition: background-color .3s ease; }
 .btn-inscription:hover { background: var(--color10); }
@@ -147,38 +147,38 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 .lien-contact { color: var(--color2); text-decoration: none; transition: color .3s ease, text-decoration .3s ease; }
 .lien-contact:hover { color: var(--color10); text-decoration: none; }
 
-/* =========================================================
-   Images & Map
-   ========================================================= */
+/*  =========================================================
+    Images & Map
+    ========================================================= */
 .img-site {width: 100%; height: 300px; object-fit: cover; display: block;box-shadow: var(--shadow);}
 .img-cfi {width: 400px; height: 100%; object-fit: cover; display: block; margin: 0 auto; margin-top: 2rem; border-radius: 4px; box-shadow: var(--shadow);}
 .img-logo-cfi {width: 120px; height: 100%; object-fit: cover; display: block; margin: 0 auto; margin-bottom: 0.5rem; margin-top: 0.5rem;}
 
 .google-map iframe {border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);}
 
-/* =========================================================
-   Footer
-   ========================================================= */
+/*  =========================================================
+    Footer
+    ========================================================= */
 .footer { margin-top: 0; padding-top: 0; max-width: 1100px; margin-inline: auto; padding-inline: 1rem; display: flex; justify-content: center; align-items: center; }
 .footer-bottom { max-width: 1100px; margin: 2rem auto 0; padding: 1rem; border-top: 2px solid #ccc; display: flex; justify-content: space-between; align-items: flex-start; }
 .footer-bottom p { margin: 0; font-size: .9rem; color: #555; }
 .footer-bottom img { width: 28px; height: 28px; transition: transform .2s ease; }
 .footer-bottom img:hover { transform: scale(1.1); }
 
-/* =========================================================
-   Album / Lightbox (alb-*)
-   ========================================================= */
-.alb-gallery { /* responsive grid */
-  --tile-min: 140px; /* mobile min tile */
-  --tile-max: 300px; /* desktop max tile */
-  display: grid;
-  gap: clamp(8px, 2.5vw, 16px);
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(clamp(var(--tile-min), 40vw, var(--tile-max)), 1fr)
-  );
-  padding-inline: clamp(8px, 4vw, 24px);
-  box-sizing: border-box;
+/*  =========================================================
+    Album / Lightbox (alb-*)
+    ========================================================= */
+.alb-gallery {
+    --tile-min: 140px; /* mobile min tile */
+    --tile-max: 300px; /* desktop max tile */
+    display: grid;
+    gap: clamp(8px, 2.5vw, 16px);
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(var(--tile-min), 40vw, var(--tile-max)), 1fr)
+    );
+    padding-inline: clamp(8px, 4vw, 24px);
+    box-sizing: border-box;
 }
 .alb-item, .album__item { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; box-shadow: var(--alb-shadow); cursor: pointer; transition: transform .3s ease, filter .3s ease; overflow: hidden; }
 .alb-item:hover, .album__item:hover { transform: scale(1.03); }
@@ -191,9 +191,9 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 @media (max-width: 900px){ .alb-gallery { --tile-max: 260px; } }
 @media (max-width: 600px){ .alb-gallery { --tile-min: 130px; } }
 
-/* =========================================================
-   Calendar (cal-*)
-   ========================================================= */
+/*  =========================================================
+    Calendar (cal-*)
+    ========================================================= */
 .cal { display: grid; place-items: center; padding: 24px; }
 .cal__root { margin: auto; width: var(--cal-width); background: var(--cal-bg); color: var(--cal-fg); border-radius: var(--cal-radius); box-shadow: var(--cal-shadow); padding: 1rem; display: flex; flex-direction: column; font-family: var(--cal-font); }
 .cal__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem; }
@@ -231,68 +231,60 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 .cal__meta { font-size: .9rem; color: var(--cal-fg); white-space: pre-line; }
 .cal__modal-close { display: none; }
 
-/* =========================================================
-   Animations
-   ========================================================= */
+/*  =========================================================
+    Animations
+    ========================================================= */
 @keyframes bounce { 0%{top:0} 50%{top:10px} 100%{top:0} }
 
-/* =========================================================
-   Responsive
-   ========================================================= */
-/* ≥992px menu hover already handled above */
-
-/* ≤1327px */
+/*  =========================================================
+    Responsive
+    ========================================================= */
 @media (max-width: 1327px) {
-  .accueil__text__mid h1 { font-size: 5rem; line-height: 6rem; }
+    .accueil__text__mid h1 { font-size: 5rem; line-height: 6rem; }
 }
 
-/* ≤991px (Tablettes) */
 @media (max-width: 991px) {
-  .accueil .toggle { display: block; position: fixed; z-index: 2100; top: 2.75rem; right: 1rem; font-size: 1.75rem; cursor: pointer; }
-  .ouvrir { display: block; }
-  .fermer { display: none; }
-  .open .ouvrir { display: none; }
-  .open .fermer { display: block; }
+    .accueil .toggle { display: block; position: fixed; z-index: 2100; top: 2.75rem; right: 1rem; font-size: 1.75rem; cursor: pointer; }
+    .ouvrir { display: block; }
+    .fermer { display: none; }
+    .open .ouvrir { display: none; }
+    .open .fermer { display: block; }
 
-  .open .logo img { max-width: 80px; }
+    .open .logo img { max-width: 80px; }
 
-  .menu { position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 85vh; transform: translateX(-100%); transition: transform .5s; flex-direction: column; align-items: center; justify-content: space-around; background: var(--color3); }
-  .menu li a { font-size: 2rem; }
-  .open .menu { transform: translateX(0); }
+    .menu { position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 85vh; transform: translateX(-100%); transition: transform .5s; flex-direction: column; align-items: center; justify-content: space-around; background: var(--color3); }
+    .menu li a { font-size: 2rem; }
+    .open .menu { transform: translateX(0); }
 
-  /* Mobile submenu revealed inside burger */
-  .menu .has-submenu > a { padding-left: 4rem; }
-  .menu .has-submenu .submenu { display: block; position: static; background: none; padding-inline: 1rem; width: 100%; }
-  .menu .has-submenu .submenu a { font-size: 1rem; padding: .5rem 0; }
+    .menu .has-submenu > a { padding-left: 4rem; }
+    .menu .has-submenu .submenu { display: block; position: static; background: none; padding-inline: 1rem; width: 100%; }
+    .menu .has-submenu .submenu a { font-size: 1rem; padding: .5rem 0; }
 }
 
-/* ≤767px (Mobiles) */
 @media (max-width: 767px) {
-  .accueil__text__mid h1 { font-size: 3rem; line-height: 4rem; }
-  .entete__slogan { display: none; }
-  .entete__titre { width: 100%; }
-  .about__corps { flex-direction: column; }
-  .about__corps__block { width: 100%; margin-bottom: .5rem; }
-  .about__corps__block:last-child { margin-bottom: 1rem; }
-  .work__corps { grid-template-columns: 1fr; }
+    .accueil__text__mid h1 { font-size: 3rem; line-height: 4rem; }
+    .entete__slogan { display: none; }
+    .entete__titre { width: 100%; }
+    .about__corps { flex-direction: column; }
+    .about__corps__block { width: 100%; margin-bottom: .5rem; }
+    .about__corps__block:last-child { margin-bottom: 1rem; }
+    .work__corps { grid-template-columns: 1fr; }
 }
 
-/* ≤768px */
 @media (max-width: 768px) {
-   .img-site {height: 100%;}
-   .img-cfi {width: 100%;}
-   .img-logo-cfi {width: 40%;}
+    .img-site {height: 100%;}
+    .img-cfi {width: 100%;}
+    .img-logo-cfi {width: 40%;}
 }
-/* ≤480px */
 @media (max-width: 480px) {
-   .img-site {height: 100%;}
-   .img-cfi {width:100%;}
-   .img-logo-cfi {width: 40%;}
+    .img-site {height: 100%;}
+    .img-cfi {width:100%;}
+    .img-logo-cfi {width: 40%;}
 }
 
-/* =========================================================
-   Helpers
-   ========================================================= */
+/*  =========================================================
+    Helpers
+    ========================================================= */
 .menu, .menu ul, .submenu { list-style: none; padding: 0; margin: 0; }
 
 /* Layout tweaks */
