@@ -384,18 +384,18 @@ if (is_post()) {
   	</section>
 
   	<!-- FOOTER -->
-  	<section class="contact">
-    	<div class="footer-bottom">
-      		<img src="img/web/logo.png"oncontextmenu="return false;">
-      		<a href="index.html">&copy; <span id="year"></span> SNSM GIRONDE</a>
-      		<a href="https://www.instagram.com/cfi_gironde_snsm?igsh=MWJtZW82Z2Ntdm5meA==" target="_blank" aria-label="Instagram">
-        		<img src="img/web/insta.png" oncontextmenu="return false;">
-      		</a>
-    	</div>
-    	<div class="footer">
-      		<a href="mentions.html">Mentions légales</a>
-    	</div>
-  	</section>
+  	<footer class="footer">
+        <div class="footer-barre"></div>
+        <div class="footer-block">
+            <img src="img/web/logo.png" oncontextmenu="return false;">
+            <a href="mentions.html">
+                &copy; <span id="year"></span> SNSM GIRONDE
+            </a>
+            <a href="https://www.instagram.com/cfi_gironde_snsm?igsh=MWJtZW82Z2Ntdm5meA==" target="_blank">
+                <img src="img/web/insta.png" oncontextmenu="return false;">
+            </a>
+        </div>
+    </footer>
 
   	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   	<script> AOS.init(); </script>

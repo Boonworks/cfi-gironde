@@ -48,7 +48,7 @@ body { font-family: var(--font2); }
 h1, h2, h3, h4, h5, h6 { font-weight: 400; }
 
 /*  =========================================================
-    Header / Hero (Accueil)
+    Hero
     ========================================================= */
 .accueil { position: relative; height: 100vh; background: center / cover no-repeat url('img/web/hero.webp'); }
 .accueil .toggle { display: none; }
@@ -75,7 +75,7 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 @media (min-width: 992px) { .has-submenu:hover .submenu { display: block; } }
 
 /*  =========================================================
-    Accueil Text
+    Accueil
     ========================================================= */
 .accueil__text { width: 80%; }
 .accueil__text__top { display: flex; align-items: center; }
@@ -116,9 +116,6 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 /*  =========================================================
     Contact
     ========================================================= */
-.contact { margin-top: 2rem; padding: 1rem 0 3rem; background: var(--color2); color: var(--color1); }
-.contact a { text-decoration: none; color: var(--color10); }
-
 .section-contact { padding: 4rem 2rem; background: #fff; }
 .contact-container { max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; }
 .contact-info, .contact-form { flex: 1 1 45%; background: #fff; padding: 2rem; border-radius: 1rem; }
@@ -159,14 +156,15 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 /*  =========================================================
     Footer
     ========================================================= */
-.footer { margin-top: 0; padding-top: 0; max-width: 1100px; margin-inline: auto; padding-inline: 1rem; display: flex; justify-content: center; align-items: center; }
-.footer-bottom { max-width: 1100px; margin: 2rem auto 0; padding: 1rem; border-top: 2px solid #ccc; display: flex; justify-content: space-between; align-items: flex-start; }
-.footer-bottom p { margin: 0; font-size: .9rem; color: #555; }
-.footer-bottom img { width: 28px; height: 28px; transition: transform .2s ease; }
-.footer-bottom img:hover { transform: scale(1.1); }
+.footer {margin-top: 2rem; padding: 1rem 0 3rem; background: var(--color2); color: var(--color1);}
+.footer a {text-decoration: none; color: var(--color10); font-weight: 600; font-size: 1rem; font-family: var(--font1);}
+.footer-barre{max-width: 1000px; margin: 1.5rem auto 0; padding: 1rem; border-top: 2px solid #ccc; }
+.footer-block {max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; }
+.footer-block img {width: 48px; height: 48px; transition: transform .2s ease;}
+.footer-block img:hover {transform: scale(1.1);}
 
 /*  =========================================================
-    Album / Lightbox (alb-*)
+    Album & Lightbox
     ========================================================= */
 .alb-gallery {
     --tile-min: 140px; /* mobile min tile */
@@ -192,7 +190,7 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 @media (max-width: 600px){ .alb-gallery { --tile-min: 130px; } }
 
 /*  =========================================================
-    Calendar (cal-*)
+    Calendar
     ========================================================= */
 .cal { display: grid; place-items: center; padding: 24px; }
 .cal__root { margin: auto; width: var(--cal-width); background: var(--cal-bg); color: var(--cal-fg); border-radius: var(--cal-radius); box-shadow: var(--cal-shadow); padding: 1rem; display: flex; flex-direction: column; font-family: var(--cal-font); }
@@ -215,11 +213,9 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 .cal__day.icon .cal__chip .t, .cal__day.icon .cal__chip .s { display: none; }
 .cal__day.icon .cal__chip { justify-content: center; text-align: center; }
 
-/* Alerts */
 .cal__alert { display: none; margin: 8px 0; padding: 8px 12px; background: #3a1212; border: 1px solid #a33; border-radius: 8px; color: #ffd7d7; }
 .cal__alert.show { display: block; }
 
-/* Modal */
 .cal__modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.6); backdrop-filter: saturate(180%) blur(3px); z-index: 9999; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .cal__modal.show { display: flex; }
 .cal__modal-card { margin: auto; width: min(92vw, 820px); max-height: 82vh; overflow: auto; background: #fff; border: 1px solid #fff; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
@@ -240,7 +236,7 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
     Responsive
     ========================================================= */
 @media (max-width: 1327px) {
-    .accueil__text__mid h1 { font-size: 5rem; line-height: 6rem; }
+    .accueil__text__mid h1 { font-size: 5rem; line-height: 6rem;}
 }
 
 @media (max-width: 991px) {
@@ -259,6 +255,9 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
     .menu .has-submenu > a { padding-left: 4rem; }
     .menu .has-submenu .submenu { display: block; position: static; background: none; padding-inline: 1rem; width: 100%; }
     .menu .has-submenu .submenu a { font-size: 1rem; padding: .5rem 0; }
+
+    .footer-barre{max-width: 700px;}
+    .footer-block {max-width: 650px;}
 }
 
 @media (max-width: 767px) {
@@ -275,11 +274,15 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
     .img-site {height: 100%;}
     .img-cfi {width: 100%;}
     .img-logo-cfi {width: 40%;}
+    .footer-barre{max-width: 500px;}
+    .footer-block {max-width: 480px;}
 }
 @media (max-width: 480px) {
     .img-site {height: 100%;}
     .img-cfi {width:100%;}
     .img-logo-cfi {width: 40%;}
+    .footer-barre{max-width: 380px;}
+    .footer-block {max-width: 350px;}
 }
 
 /*  =========================================================
