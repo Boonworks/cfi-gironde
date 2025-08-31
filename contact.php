@@ -259,7 +259,7 @@ if (is_post()) {
       		</div>
 
       		<ul class="menu">
-        		<li><a href="index.html" class="menu__link">Accueil</a></li>
+        		<li><a href="https://cfi-gironde.fr/" class="menu__link">Accueil</a></li>
         		<li class="has-submenu">
           		<a href="#" class="menu__link submenu-toggle">Formation</a>
           		<ul class="submenu">
@@ -387,7 +387,9 @@ if (is_post()) {
   	<footer class="footer">
         <div class="footer-barre"></div>
         <div class="footer-block">
-            <img src="img/web/logo.png" oncontextmenu="return false;">
+            <a href="https://cfi-gironde.fr/">
+                <img src="img/web/logo.png" oncontextmenu="return false;">
+            </a>
             <a href="mentions.html">
                 &copy; <span id="year"></span> SNSM GIRONDE
             </a>

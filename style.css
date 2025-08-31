@@ -160,8 +160,8 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 .footer a {text-decoration: none; color: var(--color10); font-weight: 600; font-size: 1rem; font-family: var(--font1);}
 .footer-barre{max-width: 1000px; margin: 1.5rem auto 0; padding: 1rem; border-top: 2px solid #ccc; }
 .footer-block {max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; }
-.footer-block img {width: 48px; height: 48px; transition: transform .2s ease;}
-.footer-block img:hover {transform: scale(1.1);}
+.footer-block img {width: 48px; height: 48px; transition: transform .5s ease, filter 0.3s ease;  cursor: pointer;}
+.footer-block img:hover {transform: scale(1.05);}
 
 /*  =========================================================
     Album & Lightbox
