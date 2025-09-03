@@ -15,7 +15,7 @@
 <option value="Demande de DPS" <?php echo (($_POST['motif'] ?? '')==='Demande de DPS')?'selected':''; ?>>Demande de DPS</option>              				
  ```
 
-  * Revoir Menu et taille dans [style.css -- 70](style.css)
+  * Revoir Menu et taille dans [style.css -- 67](style.css)
 
 ```css
   .menu { position: absolute; top: 2.75rem; left: 50%; transform: translateX(-50%); display: flex; justify-content: space-between; width: 550px; list-style: none; }
