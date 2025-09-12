@@ -1,12 +1,21 @@
+# ==== Serveur & Package ==== #
 config/
-img/
-img/web
 phpmailer/
+
+# ==== Images ==== #
+img/galerie
+img/album
+
+# ==== Calendrier ==== #
 calendrier_promo.ics
 
-.htaccess
+# ==== SEO ==== #
 sitemap.xml
 robots.txt
 llms.txt
 
+# ==== To Do ==== #
 dispositifs-previsionnels-de-secours.html
+todo.md
+
+# =========================== #
