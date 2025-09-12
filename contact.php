@@ -6,9 +6,9 @@ $errors = [];
 $success = false;
 
 if (!isset($_SESSION['last_submit'])) $_SESSION['last_submit'] = 0;
-if ($_SERVER['REQUEST_METHOD'] === 'POST') 
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-  	if (time() - $_SESSION['last_submit'] < 60) 
+  	if (time() - $_SESSION['last_submit'] < 60)
 	{
     	$errors[] = "Trop d’envois, réessayez dans une minute.";
   	}
@@ -42,13 +42,13 @@ $SMTP = [
   	'port'   => 587,
   	'secure' => 'tls',
   	'user'   => 'no-reply@cfi-gironde.fr',
-  	'from'   => 'no-reply@cfi-gironde.fr', 
+  	'from'   => 'no-reply@cfi-gironde.fr',
   	'pass'   => $secrets['smtp_pass'],
 ];
 
 /* ============================================= */
 
-if (empty($_SESSION['csrf'])) 
+if (empty($_SESSION['csrf']))
 {
   	$_SESSION['csrf'] = bin2hex(random_bytes(32));
 }
@@ -56,7 +56,7 @@ if (empty($_SESSION['csrf']))
 function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }
 function is_post(): bool { return ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST'; }
 
-function verify_recaptcha(string $secret, string $token, string $remoteIp, float $minScore = 0.5): bool 
+function verify_recaptcha(string $secret, string $token, string $remoteIp, float $minScore = 0.5): bool
 {
   	if ($token === 'no-captcha' || $token === '') return false;
   	$data = http_build_query(['secret'=>$secret,'response'=>$token,'remoteip'=>$remoteIp]);
@@ -77,18 +77,18 @@ if (is_post()) {
   	usleep(600000);
 
   	// CSRF
-  	if (!isset($_POST['csrf']) || !hash_equals($_SESSION['csrf'], (string)$_POST['csrf'])) 
+  	if (!isset($_POST['csrf']) || !hash_equals($_SESSION['csrf'], (string)$_POST['csrf']))
 	{
   	 	$errors[] = "Session expirée. Merci de recharger la page.";
   	}
 
   	// Honeypot
-  	if (!empty($_POST['website'] ?? '')) 
+  	if (!empty($_POST['website'] ?? ''))
 	{
   	  	// Bot → on fait comme si OK sans envoyer
   	  	$success = true;
-  	} 
-	else 
+  	}
+	else
 	{
   	  	// Données
   	  	$nom       = trim((string)($_POST['nom'] ?? ''));
@@ -107,13 +107,13 @@ if (is_post()) {
   	  	if ($message === '' || mb_strlen($message) < 10)                $errors[] = "Message trop court (10 caractères min).";
 
   	  	// reCAPTCHA
-  	  	if (!verify_recaptcha($RECAPTCHA_SECRET, $token, $ip, 0.5)) 
+  	  	if (!verify_recaptcha($RECAPTCHA_SECRET, $token, $ip, 0.5))
 		{
   	  	  	$errors[] = "Vérification anti-spam échouée.";
   	  	}
 
     	// Envoi via SMTP/PHPMailer
-    	if (!$errors) 
+    	if (!$errors)
 		{
       		$subject = "Contact site – $motif";
 			// Version HTML
@@ -143,7 +143,7 @@ if (is_post()) {
 			    "IP : $ip\n" .
 			    "Date : " . date('Y-m-d H:i:s');
 
-			
+
 			try
 			{
         		$mail = new PHPMailer(true);
@@ -173,8 +173,8 @@ if (is_post()) {
         		$mail->Body    = $bodyHtml;
         		$mail->AltBody = $bodyText;
         		$mail->send();
-					
-        		try 
+
+        		try
 				{
         		    $ack = clone $mail;
         		    $ack->clearAddresses();
@@ -207,16 +207,16 @@ if (is_post()) {
 						. "cfi-gironde@snsm.org\n\n"
 						. "500 Boulevard Alfred Daney\n\n"
 						. "33300 Bordeaux\n\n"
-						
+
 					;
 
         		    $ack->send();
         		} catch (\Throwable $e) { /* on ignore si l’AR échoue */ }
-			
+
         		$success = true;
         		$_SESSION['last_submit'] = time();
-			
-      		} catch (Exception $e) 
+
+      		} catch (Exception $e)
 			{
         	$errors[] = 'Erreur SMTP: ' . $mail->ErrorInfo;
       		}
@@ -419,20 +419,20 @@ if (is_post()) {
   	<script>
     	const siteKey = "<?php echo e($RECAPTCHA_SITE_KEY); ?>";
     	const form = document.getElementById('contactForm');
-    	form.addEventListener('submit', function (e) 
+    	form.addEventListener('submit', function (e)
 		{
       		const tokenField = document.getElementById('captcha_token');
-      		if (!tokenField.value) 
+      		if (!tokenField.value)
 			{
         		e.preventDefault();
-        		grecaptcha.ready(async function () 
+        		grecaptcha.ready(async function ()
 				{
-          			try 
+          			try
 					{
             			const token = await grecaptcha.execute(siteKey, { action: 'contact' });
             			tokenField.value = token;
             			form.submit();
-          			} catch (err) 
+          			} catch (err)
 					{
             			alert("Erreur reCAPTCHA, merci de réessayer.");
           			}

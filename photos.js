@@ -50,7 +50,7 @@
     setImg(st.items[st.index].href);
     if(st.items[st.index+1]) preload(st.items[st.index+1].href);
   }
-  
+
 //======================= Ouvrir depuis la vignette =======================
   document.addEventListener('click', e=>{
     const img=e.target.closest('img.alb-item, img.album__item');

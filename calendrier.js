@@ -1,5 +1,5 @@
 /* =========================================================
-   Calendrier ICS 
+   Calendrier ICS
    ========================================================= */
 
 document.addEventListener('DOMContentLoaded', () => {

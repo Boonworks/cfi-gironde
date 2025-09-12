@@ -15,7 +15,7 @@ RewriteRule ^contact\.php$ /contact [R=301,L]
 # Réécriture interne : /contact -> contact.php
 RewriteRule ^contact/?$ contact.php [L]
 
-# URLs propres pour .html 
+# URLs propres pour .html
 RewriteCond %{THE_REQUEST} \s/+([^\s?]+)\.html[\s?] [NC]
 RewriteCond %1 !^contact$ [NC]
 RewriteRule ^ %1 [R=301,L]

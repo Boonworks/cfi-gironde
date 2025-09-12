@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* =========================================================
                            Animations GSA
    ========================================================= */
-  if (window.gsap) 
+  if (window.gsap)
   {
     const tl = gsap.timeline();
     tl.from('.accueil', {duration: 0.1,filter: 'blur(10px)',});
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tl.from('.logo, .menu, .toggle', {duration: 0.7,opacity: 0,});
     tl.from('.accueil__text__top, .accueil__text__mid, .accueil__text__bot', {duration: 0.5,opacity: 0,});
     tl.from('.accueil__text__top .sep', {duration: 0.7,width: '0px',});
-  } else 
+  } else
   {
     // GSAP absent : on ignore silencieusement
   }
