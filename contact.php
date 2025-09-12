@@ -268,14 +268,14 @@ if (is_post()) {
         		<li class="has-submenu">
           		<a href="#" class="menu__link submenu-toggle">Formation</a>
           		<ul class="submenu">
-            		<li><a href="formation-nageur-sauveteur.html" class="menu__link">Devenir Nageur Sauveteur</a></li>
-            		<li><a href="formation-pse.html" class="menu__link">Filière professionelle - PSE</a></li>
-            		<li><a href="formation-psc.html" class="menu__link">Filière citoyenne - PSC</a></li>
+            		<li><a href="formation-nageur-sauveteur" class="menu__link">Devenir Nageur Sauveteur</a></li>
+            		<li><a href="formation-pse" class="menu__link">Filière professionelle - PSE</a></li>
+            		<li><a href="formation-psc" class="menu__link">Filière citoyenne - PSC</a></li>
           		</ul>
         		</li>
-        		<li><a href="calendrier.html" class="menu__link">Calendrier</a></li>
-        		<li><a href="contact.php" class="menu__link">Contact</a></li>
-        		<li><a href="photos.html" class="menu__link">Album</a></li>
+        		<li><a href="calendrier" class="menu__link">Calendrier</a></li>
+        		<li><a href="contact" class="menu__link">Contact</a></li>
+        		<li><a href="photos" class="menu__link">Album</a></li>
       		</ul>
 
       		<div class="toggle">
@@ -380,7 +380,7 @@ if (is_post()) {
         				<label for="consent">
             				J’accepte que mes données soient utilisées pour être recontacté.
             				<span class="privacy-right">
-                				<a href="/mentions.html#confidentialite" class="lien-special" target="_blank" rel="noopener">Politique de confidentialité</a>
+                				<a href="mentions" class="lien-special" target="_blank" rel="noopener">Politique de confidentialité</a>
             				</span>
         				</label>
     				</div>
@@ -399,7 +399,7 @@ if (is_post()) {
             <a href="https://cfi-gironde.fr/">
                 <img src="img/web/logo.png" oncontextmenu="return false;">
             </a>
-            <a href="mentions.html">
+            <a href="mentions">
                 &copy; <span id="year"></span> SNSM GIRONDE
             </a>
             <a href="https://www.instagram.com/cfi_gironde_snsm?igsh=MWJtZW82Z2Ntdm5meA==" target="_blank">
