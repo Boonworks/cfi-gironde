@@ -7,7 +7,9 @@ img/galerie
 img/album
 
 # ==== Calendrier ==== #
+ics_saves/
 calendrier_promo.ics
+
 
 # ==== SEO ==== #
 sitemap.xml
