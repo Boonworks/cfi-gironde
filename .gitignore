@@ -3,20 +3,22 @@ config/
 phpmailer/
 
 # ==== Images ==== #
-img/galerie
-img/album
+album
+galerie
+python
 
 # ==== Calendrier ==== #
-ics_saves/
 calendrier_promo.ics
 
 # ==== SEO ==== #
 sitemap.xml
 security.txt
 robots.txt
-llms.txt
 
-# ==== To Do ==== #
+# ==== To do ==== #
 todo.md
 dispositifs-previsionnels-de-secours.html
+
+# ==== To delete ==== #
+data
 # =========================== #
