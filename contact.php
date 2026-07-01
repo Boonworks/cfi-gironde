@@ -4,13 +4,14 @@ session_start();
 
 $errors = [];
 $success = false;
+$throttled = false;
 
 if (!isset($_SESSION['last_submit'])) $_SESSION['last_submit'] = 0;
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
   	if (time() - $_SESSION['last_submit'] < 60)
 	{
-    	$errors[] = "Trop d’envois, réessayez dans une minute.";
+    	$throttled = true;
   	}
 }
 
@@ -31,7 +32,6 @@ $SITE_NAME = 'CFI Gironde';
 
 $secrets = require '/home/config.mail.php';
 
-$SMTP['pass'] = $secrets['smtp_pass'];
 $RECAPTCHA_SECRET = $secrets['recaptcha_secret'];
 
 // reCAPTCHA v3
@@ -69,10 +69,11 @@ function verify_recaptcha(string $secret, string $token, string $remoteIp, float
   	return true;
 }
 
-$errors = [];
-$success = false;
+if (is_post() && $throttled) {
+  	$errors[] = "Trop d’envois, réessayez dans une minute.";
+}
 
-if (is_post()) {
+if (is_post() && !$throttled) {
   	// Décaler un peu pour bots trop rapides
   	usleep(600000);
 
@@ -234,11 +235,10 @@ if (is_post()) {
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   	<title>Contact – CFI Gironde – Formations BNSSA, PSE, PSC à Bordeaux</title>
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   	<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   	<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-  	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  	<link rel="stylesheet" href="style.css"/>
+  	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
+  	<link rel="stylesheet" href="style.css?v=1.5"/>
   	<link rel="canonical" href="https://cfi-gironde.fr/contact">
   	<link rel="icon" href="/img/web/logo.png" type="image/png">
   	<link rel="shortcut icon" href="/img/web/favicon.ico" type="image/x-icon">
@@ -260,7 +260,7 @@ if (is_post()) {
   	<section class="accueil">
     	<div class="overlay">
       		<div class="logo">
-          		<img src="img/web/logo.png" oncontextmenu="return false;"/>
+          		<img src="img/web/logo.png"/>
       		</div>
 
       		<ul class="menu">
@@ -279,8 +279,8 @@ if (is_post()) {
       		</ul>
 
       		<div class="toggle">
-      		  	<i class="fas fa-bars ouvrir"></i>
-      		  	<i class="fas fa-times fermer"></i>
+      		  	<svg class="ouvrir" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      		  	<svg class="fermer" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
       		</div>
 
       		<div class="accueil__text">
@@ -397,23 +397,22 @@ if (is_post()) {
         <div class="footer-barre"></div>
         <div class="footer-block">
             <a href="https://cfi-gironde.fr/">
-                <img src="img/web/logo.png" oncontextmenu="return false;">
+                <img src="img/web/logo.png">
             </a>
             <a href="mentions">
                 &copy; <span id="year"></span> SNSM GIRONDE
             </a>
             <a href="https://www.instagram.com/cfi_gironde_snsm?igsh=MWJtZW82Z2Ntdm5meA==" target="_blank">
-                <img src="img/web/insta.png" oncontextmenu="return false;">
+                <img src="img/web/insta.png">
             </a>
         </div>
     </footer>
 
     <!-- =========================== JS =========================== -->
 
-  	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js" integrity="sha384-wziAfh6b/qT+3LrqebF9WeK4+J5sehS6FA10J1t3a866kJ/fvU5UwofWnQyzLtwu" crossorigin="anonymous"></script>
   	<script> AOS.init(); </script>
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js" integrity="sha512-UxP+UhJaGRWuMG2YC6LPWYpFQnsSgnor0VUF3BHdD83PS/pOpN+FYbZmrYN+ISX8jnvgVUciqP/fILOXDjZSwg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  	<script src="app.js"></script>
+  	<script src="app.js?v=1.5"></script>
 
   	<!-- Génération du token reCAPTCHA v3 au submit -->
   	<script>

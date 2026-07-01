@@ -11,7 +11,7 @@
   }
   function getItems(g){
     return qsa('img.alb-item, img.album__item', g).map(img=>({
-      href: img.currentSrc || img.src,
+      href: img.dataset.full || img.currentSrc || img.src,
       caption: img.alt || '',
       el: img
     }));

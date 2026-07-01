@@ -1,6 +1,6 @@
 # ==== Serveur & Package ==== #
-config/
-phpmailer/
+config
+phpmailer
 
 # ==== Images ==== #
 album
@@ -12,7 +12,6 @@ calendrier_promo.ics
 
 # ==== SEO ==== #
 sitemap.xml
-security.txt
 robots.txt
 
 # ==== To do ==== #
@@ -21,4 +20,3 @@ dispositifs-previsionnels-de-secours.html
 
 # ==== To delete ==== #
 data
-# =========================== #

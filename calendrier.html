@@ -5,12 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CFI Gironde - Calendrier formation</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css?v=1.5"/>
 
     <link rel="canonical" href="https://cfi-gironde.fr/calendrier">
 
@@ -35,7 +34,7 @@
         <div class="overlay">
             <div class="logo">
                 <a href="https://monespace.snsm.org/s/login/?ec=302&startURL=%2Fs%2F" target="_blank">
-                <img src="img/web/logo.png" oncontextmenu="return false;"/> </a>
+                <img src="img/web/logo.png"/> </a>
             </div>
 
              <ul class="menu">
@@ -53,8 +52,8 @@
                     <li><a href="photos" class="menu__link">Album</a></li>
                 </ul>
             <div class="toggle">
-                <i class="fas fa-bars ouvrir"></i>
-                <i class="fas fa-times fermer"></i>
+                <svg class="ouvrir" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                <svg class="fermer" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
             </div>
 
             <div class="accueil__text">
@@ -128,24 +127,23 @@
         <div class="footer-barre"></div>
         <div class="footer-block">
             <a href="https://cfi-gironde.fr/">
-                <img src="img/web/logo.png" oncontextmenu="return false;">
+                <img src="img/web/logo.png">
             </a>
             <a href="mentions">
                 &copy; <span id="year"></span> SNSM GIRONDE
             </a>
             <a href="https://www.instagram.com/cfi_gironde_snsm?igsh=MWJtZW82Z2Ntdm5meA==" target="_blank">
-                <img src="img/web/insta.png" oncontextmenu="return false;">
+                <img src="img/web/insta.png">
             </a>
         </div>
     </footer>
 
     <!-- =========================== JS =========================== -->
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" integrity="sha384-wziAfh6b/qT+3LrqebF9WeK4+J5sehS6FA10J1t3a866kJ/fvU5UwofWnQyzLtwu" crossorigin="anonymous"></script>
     <script>AOS.init();</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ical.js/1.4.0/ical.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js" integrity="sha512-UxP+UhJaGRWuMG2YC6LPWYpFQnsSgnor0VUF3BHdD83PS/pOpN+FYbZmrYN+ISX8jnvgVUciqP/fILOXDjZSwg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=1.5"></script>
     <script src="calendrier.js?v=5" defer></script>
 
 </body>
