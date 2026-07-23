@@ -3,9 +3,10 @@ config
 phpmailer
 
 # ==== Images ==== #
+data
 album
-galerie
 python
+galerie
 
 # ==== Calendrier ==== #
 calendrier_promo.ics
@@ -17,6 +18,3 @@ robots.txt
 # ==== To do ==== #
 todo.md
 dispositifs-previsionnels-de-secours.html
-
-# ==== To delete ==== #
-data

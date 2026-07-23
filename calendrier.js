@@ -252,11 +252,10 @@ document.addEventListener('DOMContentLoaded', () => {
         for (const ev of evs) {
           const row = document.createElement('div');
           row.className = 'cal__chip' + (ev._isContinuation ? ' multi' : '');
-          const t0 = ev.dtstart ? timeFormatter.format(ev.dtstart) : '';
-          row.innerHTML = (t0 ? `<span class="t">${t0}</span>` : '') + `<span class="s">${ev.summary || ''}</span>`;
-          row.dataset.time = t0 || '';
+          // Horaires masqués
+          row.innerHTML = `<span class="s">${ev.summary || ''}</span>`;
           row.dataset.title = ev.summary || '';
-          row.title = (t0 ? `${t0} — ` : '') + (ev.summary || '');
+          row.title = ev.summary || '';
           list.appendChild(row);
         }
       }
@@ -273,11 +272,19 @@ document.addEventListener('DOMContentLoaded', () => {
      ======================================================= */
   function emojiFor(title){
     const t = (title || '').toLowerCase();
-    if (t.includes('bnssa')) return '🏊';
-    if (t.includes('océan') || t.includes('ocean') || t.includes('Pratique')) return '🌊';
-    if (t.includes('secours')) return '🚑';
-    if (t.includes('réunion')) return '📣';
-    if (t.includes('ppg') || t.includes('Théorie')) return '🏋️';
+    if (t.includes('réunion') || t.includes('reunion')) return '📣';
+    if (t.includes('accueil'))                          return '👋';
+    if (t.includes('découverte') || t.includes('decouverte')) return '🧭';
+    if (t.includes('ppg'))                              return '🏋️';
+    if (t.includes('matériel') || t.includes('materiel')) return '🧰';
+    if (t.includes('marine jet'))                       return '🚤';
+    if (t.includes('secour'))                           return '🚑';
+    if (t.includes('pse'))                              return '🚑';
+    if (t.includes('ssa'))                              return '🛟';
+    if (t.includes('piscine'))                          return '🏊';
+    if (t.includes('aisance') || t.includes('pes'))     return '🏊';
+    if (t.includes('océan') || t.includes('ocean'))     return '🌊';
+    if (t.includes('bnssa'))                            return '🏊';
     if (t.includes('pilotage') || t.includes('embarcation')) return '🛶';
     return '📌';
   }
@@ -298,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
       evs.forEach((chip, i) => {
         const emoji = emojiFor(chip.dataset.title);
         chip.textContent = emoji;
-        chip.title = chip.dataset.time ? `${chip.dataset.time} — ${chip.dataset.title}` : chip.dataset.title;
+        chip.title = chip.dataset.title;
         chip.style.display = (i > 2 ? 'none' : '');
       });
       return;
@@ -307,15 +314,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (available < 92) {
       day.classList.add('compact');
       evs.forEach(chip => {
-        chip.innerHTML = chip.dataset.time ? `<span class="t">${chip.dataset.time}</span>` : '•';
-        chip.title = chip.dataset.title ? `${chip.dataset.time || ''} ${chip.dataset.title}`.trim() : chip.title;
+        chip.innerHTML = `<span class="s">${chip.dataset.title}</span>`;
+        chip.title = chip.dataset.title;
         chip.style.display = '';
       });
       return;
     }
 
     evs.forEach(chip => {
-      chip.innerHTML = (chip.dataset.time ? `<span class="t">${chip.dataset.time}</span>` : '') + `<span class="s">${chip.dataset.title}</span>`;
+      chip.innerHTML = `<span class="s">${chip.dataset.title}</span>`;
       chip.style.display = '';
     });
   }
@@ -347,9 +354,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const card=document.createElement('div'); card.className='cal__card';
         const h=document.createElement('h4'); h.textContent=ev.summary||'(Sans titre)';
         const meta=document.createElement('div'); meta.className='cal__meta';
-        const t0 = ev.dtstart ? timeFormatter.format(ev.dtstart) : '';
-        const t1 = ev.dtend? ' – '+timeFormatter.format(ev.dtend):'';
-        meta.textContent = (t0?t0:'')+(t1?t1:'')+(ev.location?`\n${ev.location}`:'');
+        // Horaires masqués : communiqués directement par email
+        meta.textContent = ev.location ? ev.location : '';
         const extra=document.createElement('div'); extra.className='cal__meta'; extra.textContent = ev.description||'';
         card.append(h, meta, extra); body.appendChild(card);
       }

@@ -234,6 +234,8 @@ canvas { border: none; box-shadow: none; background: #1e90ff; }
 .cal__alert { display: none; margin: 8px 0; padding: 8px 12px; background: #3a1212; border: 1px solid #a33; border-radius: 8px; color: #ffd7d7; }
 .cal__alert.show { display: block; }
 
+.cal__note { margin: 1rem 0 .25rem; padding-top: .85rem; border-top: 1px solid var(--cal-muted); font-size: .85rem; line-height: 1.5; color: var(--cal-muted); text-align: center; }
+
 .cal__modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.6); backdrop-filter: saturate(180%) blur(3px); z-index: 9999; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .cal__modal.show { display: flex; }
 .cal__modal-card { margin: auto; width: min(92vw, 820px); max-height: 82vh; overflow: auto; background: #fff; border: 1px solid #fff; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
